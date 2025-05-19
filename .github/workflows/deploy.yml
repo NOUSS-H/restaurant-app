@@ -20,7 +20,7 @@ jobs:
           java-version: '17'
 
       - name: Build Spring Boot backend
-        working-directory: ./restaurant-backend
+        working-directory: ./restaurant-front
         run: ./mvnw clean package -DskipTests
 
       - name: Set up Node.js
@@ -29,7 +29,7 @@ jobs:
           node-version: '20'
 
       - name: Build React frontend
-        working-directory: ./restaurant-frontend
+        working-directory: ./restaurant1
         run: |
           npm install
           npm run build
