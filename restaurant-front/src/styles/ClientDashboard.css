@@ -1,0 +1,25 @@
+.dashboard, .client-dashboard {
+    padding: 2rem;
+    color: #333;
+    background-color: #fffaf3;
+    min-height: 100vh;
+  }
+  
+  .section {
+    margin-bottom: 2rem;
+  }
+  
+  .order-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  
+  .order-card ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+  

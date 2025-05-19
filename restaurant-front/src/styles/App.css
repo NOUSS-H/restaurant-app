@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+ 
+  
+}
+
+.navbar {
+  
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: #a56512;
+  text-decoration: none;
+  margin-left: 1rem;
+  font-weight: bold;
+}
+
+.card {
+  background-color: #cab179;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+button {
+  background-color: #f98a1e;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #d96f00;
+}
+
+.order-card {
+  background-color: #f5e3a1;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  border: 2px solid #fdb347;
+}

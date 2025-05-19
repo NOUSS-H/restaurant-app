@@ -1,0 +1,49 @@
+# === Global ===
+.DS_Store
+Thumbs.db
+*.log
+.env
+*.env
+
+# === Node.js / Frontend ===
+node_modules/
+build/
+dist/
+.cache/
+.npm/
+.vite/
+coverage/
+
+# === React specific ===
+*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# === Java / Spring Boot / Backend ===
+/target/
+*.class
+*.jar
+*.war
+*.iml
+*.log
+*.db
+hs_err_pid*
+/out/
+
+# === IDEs & editors ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === OS ===
+*.bak
+*.tmp
+*.temp
+
+# === Database dumps ===
+*.sql
+*.sqlite
+*.db

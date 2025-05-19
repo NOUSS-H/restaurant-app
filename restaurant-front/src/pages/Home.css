@@ -1,0 +1,43 @@
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 185px 100px;
+    
+  }
+  
+  .home-content {
+    background-color: rgba(191, 141, 98, 0.488);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    text-align: center;
+    
+  }
+  
+  .home-content h1 {
+    font-size: 2.8rem;
+    color: #67462d;
+    margin-bottom: 20px;
+  }
+  
+  .home-content p {
+    font-size: 1.2rem;
+    color: #5c4033;
+  }
+  .menu-button {
+    display: inline-block;
+    background-color: #99582a;
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.6rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .menu-button:hover {
+    background-color: #b86d42;
+  }
+  
