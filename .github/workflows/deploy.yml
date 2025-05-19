@@ -10,31 +10,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Backend - Donner la permission d'exécution à mvnw avant de build
+      # 🔧 Donner les droits d'exécution à mvnw
       - name: Give execute permission to mvnw
         working-directory: ./restaurant1
         run: chmod +x mvnw
 
+      # ☕ Setup Java pour backend
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # 🏗️ Build Spring Boot backend
       - name: Build Spring Boot backend
         working-directory: ./restaurant1
         run: ./mvnw clean package -DskipTests
 
-      # Frontend - Setup Node.js et build React
+      # 🌐 Setup Node.js pour React
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # 🏗️ Build React frontend
       - name: Build React frontend
         working-directory: ./restaurant-front
         run: |
           npm install
           npm run build
 
-      # Login au registre Azure Container Registry
+      # 🔐 Connexion à Azure Container Registry (ACR)
       - name: Log in to Azure Container Registry
         uses: azure/docker-login@v1
         with:
@@ -42,34 +51,34 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      # Build et push de l'image Docker backend
+      # 🐳 Build et push de l'image Docker du backend
       - name: Build and push backend Docker image
         working-directory: ./restaurant1
         run: |
           docker build -t ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-backend:latest .
           docker push ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-backend:latest
 
-      # Build et push de l'image Docker frontend
+      # 🐳 Build et push de l'image Docker du frontend
       - name: Build and push frontend Docker image
         working-directory: ./restaurant-front
         run: |
           docker build -t ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-frontend:latest .
           docker push ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-frontend:latest
 
-      # Login Azure pour déploiement
+      # 🔐 Connexion à Azure pour déploiement
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Déploiement backend sur Azure App Service
+      # 🚀 Déploiement backend sur Azure App Service
       - name: Deploy backend to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.APP_SERVICE_NAME_BACKEND }}
           images: ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-backend:latest
 
-      # Déploiement frontend sur Azure App Service
+      # 🚀 Déploiement frontend sur Azure App Service
       - name: Deploy frontend to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
