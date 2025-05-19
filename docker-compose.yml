@@ -1,0 +1,13 @@
+
+services:
+  backend:
+    build: ./restaurant1
+    image: restaurant-backend:latest
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./restaurant-front
+    image: restaurant-frontend:latest
+    ports:
+      - "3000:80"
