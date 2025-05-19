@@ -13,57 +13,65 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      # Build Spring Boot backend
+      - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build Spring Boot backend
-        working-directory: ./restaurant-front
+      - name: Build backend with Maven
+        working-directory: ./restaurant1  # <-- Chemin vers backend (à ajuster)
         run: ./mvnw clean package -DskipTests
 
-      - name: Set up Node.js
+      # Build React frontend
+      - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Build React frontend
-        working-directory: ./restaurant1
+      - name: Build frontend with npm
+        working-directory: ./restaurant-front  # <-- Chemin vers frontend (à ajuster)
         run: |
           npm install
           npm run build
 
-      - name: Log in to Azure Container Registry
+      # Login Azure Container Registry (ACR)
+      - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_NAME }}.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
+      # Build & push backend Docker image
       - name: Build and push backend Docker image
-        working-directory: ./restaurant-backend
+        working-directory: ./restaurant1  # backend folder with Dockerfile
         run: |
           docker build -t ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-backend:latest .
           docker push ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-backend:latest
 
+      # Build & push frontend Docker image
       - name: Build and push frontend Docker image
-        working-directory: ./restaurant-frontend
+        working-directory: ./restaurant-front  # frontend folder with Dockerfile
         run: |
           docker build -t ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-frontend:latest .
           docker push ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-frontend:latest
 
+      # Login Azure
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      # Deploy backend app service
       - name: Deploy backend to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.APP_SERVICE_NAME_BACKEND }}
           images: ${{ secrets.REGISTRY_NAME }}.azurecr.io/restaurant-backend:latest
 
+      # Deploy frontend app service
       - name: Deploy frontend to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
